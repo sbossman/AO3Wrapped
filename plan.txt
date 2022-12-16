@@ -1,0 +1,14 @@
+1. Scrape stuff
+2. Put csv into ao3 wrapped folder
+3. Look at what we can deal with right now
+4. Find most common tag
+5. Count individual fics read
+6. Total word count
+7. Create code to make a "fic" object
+8. Have array of fics
+9. Read the csv and create fic objects for them
+
+POTENTIAL ISSUES
+- It goes through every tag a fic has, so the more tags a fic has, the more impact it'll have
+- Figure out good way to format the data
+- Cound
