@@ -1,8 +1,8 @@
 # from fanfiction_history import *
-from fic_history_combined import *
+from ao3Wrapped.src.fic_history_combined import *
 
 if __name__ == "__main__":
-    fic_list = FicHistoryNumFic("./data/fic_scrape2023.csv")
+    fic_list = FicHistoryNumFic("../data/fic_scrape2023.csv")
 
     print("------ WELCOME TO YOUR AO3 WRAPPED ------")
     print()

@@ -1,26 +1,8 @@
-import csv
-from ao3Wrapped.src.fanfic import *
-from ao3Wrapped.src.col_nums import *
-
-def order_dict(list):
-    new_dict = {}
-
-    while len(list) > 1:
-        greatest = ""
-        greatest_count = 0
-        for item in list:
-            if list[item] >= greatest_count:
-                greatest = item
-                greatest_count = list[item]
-
-        new_dict[greatest] = greatest_count
-        list.pop(greatest)
-
-    return new_dict
+from fanfiction_history import *
 
 
 
-class FicHistoryNumFic:
+class FicHistoryWC:
     def __init__(self, csv_location):
         # creates the list of fics
         with open(csv_location, 'r') as fics_read:
@@ -44,7 +26,8 @@ class FicHistoryNumFic:
                     current_title = row[TITLE]
                     current_author = row[AUTHOR]
                     current_rating = row[RATING]
-                    current_word_count = int((row[WORD_COUNT]).replace(",", ""))
+                    current_word_count = int((row[WORD_COUNT]).replace(',', ''))
+                    # current_word_count = int((row[WORD_COUNT]))
                     current_fandoms = row[FANDOM].split('$') if len(row[FANDOM]) > 0 else []
                     current_ships = row[SHIPS].split('$') if len(row[SHIPS]) > 0 else []
                     current_tags = [row[TAGS]] if len(row[TAGS]) > 0 else []
@@ -71,6 +54,7 @@ class FicHistoryNumFic:
                         current_ships = row[SHIPS].split('$') if len(row[SHIPS]) > 0 else []
                         current_tags = [row[TAGS]] if len(row[TAGS]) > 0 else []
                 line_count += 1
+                print(line_count)
 
             self.fic_list.append(Fanfiction(current_title, current_author, current_rating, current_word_count,
                                             current_fandoms, current_ships, current_tags))
@@ -80,16 +64,16 @@ class FicHistoryNumFic:
         # ratings
         self.ratings = {"General Audiences": 0, "Teen And Up Audiences": 0, "Mature": 0, "Explicit": 0, "Not Rated": 0}
         for fic in self.fic_list:
-            self.ratings[fic.rating] += 1
+            self.ratings[fic.rating] += fic.word_count
 
         # fandoms
         self.fandom_list = {}
         for fic in self.fic_list:
             for fandom in fic.fandoms:
                 if fandom in self.fandom_list:
-                    self.fandom_list[fandom] += 1
+                    self.fandom_list[fandom] += int(fic.word_count)
                 else:
-                    self.fandom_list[fandom] = 1
+                    self.fandom_list[fandom] = int(fic.word_count)
         self.fandom_list = order_dict(self.fandom_list)
 
         # ships
@@ -97,9 +81,9 @@ class FicHistoryNumFic:
         for fic in self.fic_list:
             for ship in fic.ships:
                 if ship in self.ship_list:
-                    self.ship_list[ship] += 1
+                    self.ship_list[ship] += int(fic.word_count)
                 else:
-                    self.ship_list[ship] = 1
+                    self.ship_list[ship] = int(fic.word_count)
         self.ship_list = order_dict(self.ship_list)
 
         # tags
@@ -109,9 +93,9 @@ class FicHistoryNumFic:
         for fic in self.fic_list:
             for tag in fic.tags:
                 if tag in self.tag_list:
-                    self.tag_list[tag] += 1
+                    self.tag_list[tag] += int(fic.word_count)
                 else:
-                    self.tag_list[tag] = 1
+                    self.tag_list[tag] = int(fic.word_count)
         self.tag_list = order_dict(self.tag_list)
 
 
