@@ -9,7 +9,7 @@ def order_dict(list):
         greatest = ""
         greatest_count = 0
         for item in list:
-            if list[item] > greatest_count:
+            if list[item] >= greatest_count:
                 greatest = item
                 greatest_count = list[item]
 
@@ -18,7 +18,9 @@ def order_dict(list):
 
     return new_dict
 
-class FanfictionHistory:
+
+
+class FicHistoryNumFic:
     def __init__(self, csv_location):
         # creates the list of fics
         with open(csv_location, 'r') as fics_read:
@@ -42,7 +44,7 @@ class FanfictionHistory:
                     current_title = row[TITLE]
                     current_author = row[AUTHOR]
                     current_rating = row[RATING]
-                    current_word_count = int(row[WORD_COUNT])
+                    current_word_count = int((row[WORD_COUNT]).replace(",", ""))
                     current_fandoms = row[FANDOM].split('$') if len(row[FANDOM]) > 0 else []
                     current_ships = row[SHIPS].split('$') if len(row[SHIPS]) > 0 else []
                     current_tags = [row[TAGS]] if len(row[TAGS]) > 0 else []
@@ -64,7 +66,7 @@ class FanfictionHistory:
                         current_title = row[TITLE]
                         current_author = row[AUTHOR]
                         current_rating = row[RATING]
-                        current_word_count = int(row[WORD_COUNT])
+                        current_word_count = int(row[WORD_COUNT].replace(',', ''))
                         current_fandoms = row[FANDOM].split('$') if len(row[FANDOM]) > 0 else []
                         current_ships = row[SHIPS].split('$') if len(row[SHIPS]) > 0 else []
                         current_tags = [row[TAGS]] if len(row[TAGS]) > 0 else []
@@ -118,6 +120,8 @@ class FanfictionHistory:
     def __len__(self):
         return len(self.fic_list)
 
+    def __str__(self):
+        return f"Contains {len(self.fic_list)} fics"
 
     # RETRIEVAL METHODS
     def get_ratings(self):
